@@ -23,6 +23,19 @@ void Button::setPosition(float x, float y)
 	text.setPosition(x + 40, y + 22);
 }
 
+
+
+void Button::push(Field*& field)
+{
+	std::string str = text.getString();
+	std::string strField = field->getText().getString();
+	if (strField == "0") strField = "";
+	strField += str;
+	field->setField(strField);
+	//std::cout << str << " push"<<std::endl;
+
+}
+
 sf::Text& Button::getText()
 {
 	return text;
@@ -35,4 +48,9 @@ sf::RectangleShape& Button::getButton()
 {
 	return rectangle;
 	// TODO: вставьте здесь оператор return
+}
+
+sf::Vector2f Button::getPosition()
+{
+	return rectangle.getPosition();
 }

@@ -2,7 +2,9 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include "Button.h"
-#include "Calculator.h"
+#include "Field.h"
+#include <Windows.h>
+
 
 class Calculator 
 {
@@ -10,7 +12,6 @@ private:
 	friend class Button;
 	sf::RenderWindow window;
 	sf::Font font;
-	sf::Text text;
 	Button* b0;
 	Button* b1;
 	Button* b2;
@@ -27,7 +28,9 @@ private:
 	Button* bdif;
 	Button* bsum;
 	Button* bdiv;
-	
+	//int coord[16][4];
+	Button** panel;
+	Field* field;
 
 public:
 	Calculator();

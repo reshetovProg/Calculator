@@ -3,13 +3,30 @@
 Calculator::Calculator() 
 	: window(sf::VideoMode(400, 500), L"Калькулятор")
 {
+	
+	/*for (int i = 0,k=0, yb=100; i < 4; i++, yb+=100) {
+		for (int j = 0; j < 4; j++) {
+			coord[k][0] = j*100;
+			coord[k][1] = yb;
+			coord[k][2] = coord[k][0]+99;
+			coord[k++][3] = yb+99;
+		}
+	}*/
+
+	/*for (int i = 0; i < 16; i++) {
+		for (int j = 0; j < 4; j++) {
+			std::cout << coord[i][j] << " ";
+		}
+		std::cout << std::endl;
+	}*/
+
 	if (!font.loadFromFile("resources/fonts/arial.ttf"))
 	{
 
 		//std::cout << "font not found";
 	}
-	text.setFont(font);
-	text.setFillColor(sf::Color::Black);
+	field = new Field(400, 100, "0");
+	field->setPosition(0,0);
 	b7 = new Button(100, 100, "7");
 	b7->setPosition(0, 100);
 	b8 = new Button(100, 100, "8");
@@ -46,6 +63,7 @@ Calculator::Calculator()
 	bdiv = new Button(100, 100, "/");
 	bdiv->setPosition(300, 400);
 
+	panel = new Button * [16]{ b7, b8, b9, bsum, b4, b5, b6, bdif, b1, b2, b3, bmult, bc, b0, beq, bdiv };
 
 }
 
@@ -61,17 +79,35 @@ void Calculator::run()
 
 void Calculator::eventState()
 {
+	sf::Vector2i localPosition;
 	sf::Event event;
 	while (window.pollEvent(event))
 	{
 		if (event.type == sf::Event::Closed)
 			window.close();
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+			localPosition = sf::Mouse::getPosition(window);
+			std::cout << localPosition.x << " : " << localPosition.y<<std::endl;
+			while (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+
+			}
+			for (int i = 0; i < 16; i++) {
+				if (localPosition.x >= panel[i]->getPosition().x &&
+					localPosition.x <= panel[i]->getPosition().x+99 &&
+					localPosition.y >= panel[i]->getPosition().y &&
+					localPosition.y <= panel[i]->getPosition().y + 99) {
+					
+					panel[i]->push(field);
+
+				}
+
+			}
+		}
 	}
 }
 
 void Calculator::update()
 {
-	text.setString(L"Калькулятор");
 }
 
 void Calculator::render()
@@ -113,7 +149,9 @@ void Calculator::render()
 	window.draw(bdiv->getButton());
 	window.draw(bdiv->getText());
 
-	window.draw(text);
+	window.draw(field->getField());
+	window.draw(field->getText());
+
 	window.display();
 }
 
