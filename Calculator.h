@@ -35,7 +35,8 @@ private:
 public:
 	Calculator();
 	void run();
-
+	std::string calculate(std::string, std::string, short);
+	double strToDouble(std::string str);
 private:
 	void eventState();
 	void update();

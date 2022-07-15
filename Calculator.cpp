@@ -77,6 +77,73 @@ void Calculator::run()
 	}
 }
 
+std::string Calculator::calculate(std::string number1, std::string number2, short operation)
+{	
+	double num1 = strToDouble(number1);
+	double num2 = strToDouble(number2);
+
+	double result;
+	switch (operation) {
+	case 1: //+
+		result = num1 + num2;
+		break;
+	case 2: //-
+		result = num1 - num2;
+		break;
+	case 3: //*
+		result = num1 * num2;
+		break;
+	case 4: // /
+		if (num2 == 0) return "division by 0";
+		else {
+			result = num1 / num2;
+		}
+		break;
+	}
+
+	std::string str = std::to_string(result);
+	field->setStatus(false);
+	return str;
+
+
+	
+}
+
+
+double Calculator::strToDouble(std::string str)
+{
+	std::string beforePoint = "";
+	std::string afterPoint = "";
+	for (int i = 0; str[i] != '\0'; i++) {
+		if (str[i] == '.') {
+			for (int j = i + 1; str[j] != '\0'; j++) {
+				afterPoint += str[j];
+			}
+			break;
+		}
+		else {
+			beforePoint += str[i];
+		}
+	}
+	double result = 0;
+	for (int i = 0; beforePoint[i] != '\0'; i++) {
+		result *= 10;
+		result += beforePoint[i] - 48;
+	}
+	double result2 = 0;
+	for (int i = 0; afterPoint[i] != '\0'; i++) {
+
+		result2 *= 10;
+		result2 += afterPoint[i] - 48;
+	}
+	result2 *= pow(0.1, size(afterPoint));
+	result += double(result2);
+	return result;
+
+}
+
+
+
 void Calculator::eventState()
 {
 	sf::Vector2i localPosition;
@@ -108,6 +175,13 @@ void Calculator::eventState()
 
 void Calculator::update()
 {
+	if (field->getStatus() == true)
+	{
+		field->setField(
+			calculate(
+				field->getNum1(), field->getNum2(), field->getOperation()));
+	}
+
 }
 
 void Calculator::render()

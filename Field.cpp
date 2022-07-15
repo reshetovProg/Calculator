@@ -22,6 +22,56 @@ void Field::setPosition(float x, float y)
 	text.setPosition(x+10, y);
 }
 
+void Field::setNum1(std::string num)
+{
+	num1 = num;
+}
+
+void Field::setStatus(bool st)
+{
+	status = st;
+}
+
+void Field::setFlag(bool st)
+{
+	flag = st;
+}
+
+void Field::setNum2(std::string num)
+{
+	num2 = num;
+}
+
+bool Field::getStatus()
+{
+	return status;
+}
+
+bool Field::getFlag()
+{
+	return flag;
+}
+
+void Field::setOperation(short operation)
+{
+	this->operation = operation;
+}
+
+short Field::getOperation()
+{
+	return operation;
+}
+
+std::string Field::getNum1()
+{
+	return num1;
+}
+
+std::string Field::getNum2()
+{
+	return num2;
+}
+
 sf::Text& Field::getText()
 {
 	return text;

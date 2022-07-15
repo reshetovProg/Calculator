@@ -27,10 +27,47 @@ void Button::setPosition(float x, float y)
 
 void Button::push(Field*& field)
 {
+	
 	std::string str = text.getString();
 	std::string strField = field->getText().getString();
-	if (strField == "0") strField = "";
-	strField += str;
+
+	if (str == "C") strField = "0";
+	else if (str == "+") {
+		field->setOperation(1);
+		field->setNum1(strField);
+		strField = "0";
+	}
+	else if (str == "-") {
+		field->setOperation(2);
+		field->setNum1(strField);
+		strField = "0";
+	}
+	else if (str == "X") {
+		field->setOperation(3);
+		field->setNum1(strField);
+		strField = "0";
+	}
+	else if (str == "/") {
+		field->setOperation(4);
+		field->setNum1(strField);
+		strField = "0";
+	}
+	else if (str == "=") {
+
+		field->setNum2(strField);
+		field->setFlag(true);
+		field->setStatus(true);
+
+	}
+
+	else {
+		if (field->getFlag() == true) {
+			field->setFlag(false);
+			strField = "";
+		}
+		if (strField == "0") strField = "";
+		strField += str;
+	}
 	field->setField(strField);
 	//std::cout << str << " push"<<std::endl;
 
